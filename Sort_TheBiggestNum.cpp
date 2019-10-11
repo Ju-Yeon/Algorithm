@@ -1,3 +1,5 @@
+//https://www.welcomekakao.com/learn/courses/30/lessons/42746
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -5,6 +7,7 @@
 
 using namespace std;
 
+/*
 bool comp  (int a,  int b);
 
 string solution(vector<int> numbers) {
@@ -31,4 +34,14 @@ string solution(vector<int> numbers) {
      
     return result;
      
+}
+*/
+
+string solution(vector<int> numbers) {
+    
+    string answer = "";
+    
+    
+    
+    return;
 }
