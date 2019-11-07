@@ -1,4 +1,4 @@
-//https://www.welcomekakao.com/learn/courses/30/lessons/42746
+//가장 큰 수 https://www.welcomekakao.com/learn/courses/30/lessons/42746
 
 #include <string>
 #include <vector>
