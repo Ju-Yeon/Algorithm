@@ -1,65 +1,51 @@
 #include <iostream>
+#include <algorithm>
 #include <queue>
-#include <set>
- 
+
 using namespace std;
- 
+
 int main(int argc, char** argv)
 {
-    int test_case;
-    int T;
- 
-     
-    int score_case;
-    int N, size, a, b, c;
-    queue <int> score_q;
- 
+    int T, N, i, l;
+    int test_case, score_case;
+    int arr[10000];
+    queue <int> q;
+
     cin>>T;
-    /*
-       여러 개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
-    */
+
     for(test_case = 1; test_case <= T; ++test_case)
     {
         cin>>N;
-        queue <int> total_sq;
-        set <int> s;
- 
-        for(score_case = 1; score_case <= N; ++score_case)
+
+        fill_n(arr, 10000, 0);
+        arr[0] = 1;
+
+        for(score_case = 0; score_case < N; score_case++)
         {
-            cin >> b;
-            score_q.push(b);
-        }
- 
-        while(!score_q.empty())
-        {
-            b = score_q.front();
-            size = total_sq.size();
-             
-            if(size == 0)
-            {
-                total_sq.push(0);
-                total_sq.push(b);
+            cin>>l;
+            auto itr = find(arr, arr+10000, 1);
+
+            while(itr != end(arr)) {
+                q.push(distance(arr,itr));
+                itr = find(itr+1, arr+10000, 1);
             }
-            else
-                {
-                for (a = 0; a < size; a++) {
-                    c = total_sq.front();
-                    total_sq.pop();
-                    total_sq.push(c+0);
-                    total_sq.push(c+b);
-                }
+
+            while(!q.empty()){
+                i = q.front();
+                arr[i+l] = 1;
+                q.pop();
             }
-            score_q.pop();
         }
- 
-       while(!total_sq.empty())
-       {
-           b = total_sq.front();
-           s.insert(b);
-           total_sq.pop();
-       }
-       cout<<"#"<<test_case<<" "<<s.size()<<endl;
- 
+
+        i=0;
+        auto itr = find(arr, arr+10000, 1);
+        while(itr != end(arr)) {
+            i++;
+            itr = find(itr+1, arr+10000, 1);
+        }
+
+       cout<<"#"<<test_case<<" "<<i<<endl;
+
     }
-    return 0;//정상종료시 반드시 0을 리턴해야합니다.
+    return 0;
 }
