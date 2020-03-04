@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    int T, N, i, l;
+    int T, N, temp, score;
     int test_case, score_case;
     int arr[10000];
     queue <int> q;
@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 
         for(score_case = 0; score_case < N; score_case++)
         {
-            cin>>l;
+            cin >> score;
             auto itr = find(arr, arr+10000, 1);
 
             while(itr != end(arr)) {
@@ -31,20 +31,20 @@ int main(int argc, char** argv)
             }
 
             while(!q.empty()){
-                i = q.front();
-                arr[i+l] = 1;
+                temp = q.front();
+                arr[temp + score] = 1;
                 q.pop();
             }
         }
 
-        i=0;
+        temp=0;
         auto itr = find(arr, arr+10000, 1);
         while(itr != end(arr)) {
-            i++;
+            temp++;
             itr = find(itr+1, arr+10000, 1);
         }
 
-       cout<<"#"<<test_case<<" "<<i<<endl;
+       cout << "#" << test_case << " " << temp << endl;
 
     }
     return 0;
