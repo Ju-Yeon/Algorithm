@@ -13,33 +13,36 @@ int main(int argc, char** argv)
     {
         sum = 0;
         cin >> N;
-        k = (N-1)/2;
 
-        for(int i = 0; i < k; i++)
-        {
-            cin>>l;
-            for(int j = k-i; j <= k+i; j++)
-            {
-               sum += l[j]-48;
+        if(N > 1) {
+            k = (N - 1) / 2;
+
+            for (int i = 0; i < k; i++) {
+                cin >> l;
+                for (int j = k - i; j <= k + i; j++) {
+                    sum += l[j] - 48;
+                }
             }
-        }
 
-        cin >> l;
-        for(int j = 0; j < N; j++)
-        {
-            sum += l[j]-48;
-        }
-
-        for(int i = k-1; i >= 0; i--)
-        {
-            cin>>l;
-            for(int j = k-i; j <= k+i; j++)
-            {
-                sum += l[j]-48;
+            cin >> l;
+            for (int j = 0; j < N; j++) {
+                sum += l[j] - 48;
             }
-        }
 
-        cout<<"#"<<test_case<<" "<<sum;
+            for (int i = k - 1; i >= 0; i--) {
+                cin >> l;
+                for (int j = k - i; j <= k + i; j++) {
+                    sum += l[j] - 48;
+                }
+            }
+            l = "";
+        }else {
+            cin>>l;
+            sum = l[0]-48;
+        }
+        
+        cout << "#" << test_case << " " << sum<<endl;
+        cin.ignore();
 
     }
     return 0;
