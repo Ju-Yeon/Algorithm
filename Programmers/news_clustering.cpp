@@ -2,8 +2,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <ctype.h>
-
 
 using namespace std;
 int solution(string str1, string str2);
@@ -14,26 +12,16 @@ int main(){
     getline(cin, str1);
     getline(cin, str2);
 
-
-    cout<<(int)solution(str1, str2)<<endl;
+    cout<<solution(str1, str2)<<endl;
 }
 
 int solution(string str1, string str2) {
     int answer = 0;
     vector <string> sv1 = makeArr(str1);
     vector <string> sv2 = makeArr(str2);
-    vector <string> sv;
+    vector <string> sv = sv2;
 
     if(!sv1.size() && !sv2.size()) return 65536;
-
-    if(sv1.size() > sv2.size()) {
-        sv = sv1;
-        sv1 = sv2;
-        sv2 = sv;
-    }else{
-        sv = sv2;
-    }
-    sv = sv2;
 
     for(int i = 0; i < sv1.size(); i++){
         auto itr = find(sv.begin(), sv.end(), sv1[i]);
