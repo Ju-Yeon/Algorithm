@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <ctype.h>
 
 using namespace std;
 int solution(string str1, string str2);
