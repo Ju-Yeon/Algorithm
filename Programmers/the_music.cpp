@@ -63,7 +63,7 @@ int getTime(string time){
     }else {
         result = t[3] - t[1];
     }
-
+    //시 계산해주기
     result += 60 * (t[2]- t[0] - flag);
     return result;
 }
