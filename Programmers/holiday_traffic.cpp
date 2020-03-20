@@ -12,7 +12,6 @@ struct transaction {
     int * etime;
 };
 
-
 int solution(vector<string> lines) {
     int answer = 0;
     transaction * t = new transaction[lines.size()];
@@ -28,23 +27,23 @@ int solution(vector<string> lines) {
         t[i].stime = getStime(t[i].etime, atof(lines[i].substr(24, lines[i].find("s")-24).c_str()) * 1000.0);
     }
 
-//    for(int i = 0; i < lines.size(); i++) {
-//        for (int a = 0; a < 3; a++) {
-//            cout << t[i].stime[a] << " ";
-//        }
-//        cout << endl;
-//        for (int a = 0; a < 3; a++) {
-//            cout << t[i].etime[a] << " ";
-//        }
-//        cout << endl << endl;
-//    }
+    for(int i = 0; i < lines.size(); i++) {
+        for (int a = 0; a < 3; a++) {
+            cout << t[i].stime[a] << " ";
+        }
+        cout << endl;
+        for (int a = 0; a < 3; a++) {
+            cout << t[i].etime[a] << " ";
+        }
+        cout << endl << endl;
+    }
 
     int *stime = new int[3];
     int *etime = new int[3];
-    int count = 0;
+    int count;
 
     for(int i = 0; i < lines.size(); i++){
-        count = 0;
+        count = 1;
         for(int l = 0; l<3; l++){
             stime[l] = t[i].etime[l];
             etime[l] = t[i].etime[l];
@@ -52,18 +51,18 @@ int solution(vector<string> lines) {
 
         etime[2] = etime[2] + 1000 - 1;
 
-        for(int l = i; l < lines.size(); l++){
-             if(!isSmall(t[l].etime, stime) && !isSmall(etime, t[l].stime)) {
-                 count ++;
-             }
+        for(int l = i+1; l < lines.size(); l++){
+            if(!isSmall(t[l].etime, stime) && !isSmall(etime, t[l].stime)) {
+                count ++;
+            }
         }
         answer = answer < count ? count : answer;
     }
-
     return answer;
 }
 
 int* getStime(int etime[3], int time){
+
     int *result = new int[3];
 
     if(etime[2] > time){
@@ -73,12 +72,18 @@ int* getStime(int etime[3], int time){
         result[2] = etime[2] - time + 1;
 
     }else{
-        if(result[1] != 0){
+        if(etime[1] != 0){
             result[0] = etime[0];
             result[1] = etime[1] - 1;
         }else{
-            result[0] = etime[0]-1;
-            result[1] = 59.0;
+            if(etime[0] == 0){
+                for(int i = 0; i < 3; i++)
+                    result[i] = 0;
+                return result;
+            }else {
+                result[0] = etime[0]-1;
+                result[1] = 59.0;
+            }
         }
         result[2] = 60000 - (time - etime[2] - 1);
     }
@@ -97,6 +102,7 @@ bool isSmall(int small[3], int big[3]){
     else if(small[2] >= big[2]) return false;
 }
 
+
 int main(){
     vector<string> lines = {
             "2016-09-15 20:59:57.421 0.351s",
@@ -110,8 +116,6 @@ int main(){
             "2016-09-15 21:00:00.966 0.381s",
             "2016-09-15 21:00:02.066 2.62s"
     };
-
-    vector<string> lines1 = {"2016-09-15 01:00:04.001 2.0s","2016-09-15 01:00:07.000 2s"};//{"2016-09-15 01:00:04.002 2.0s", "2016-09-15 01:00:07.000 2s"};
 
 
     cout<<solution(lines)<<endl;
