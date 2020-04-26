@@ -71,8 +71,6 @@ void addLine(int num, int core, int len){
 
     int nx, ny, length, flag = 0;
     
-    //안함
-    addLine(num + 1, core, len);
 
     //위, 오른쪽, 아래, 왼쪽
     for(int i = 0; i < 4; i++) {
@@ -111,5 +109,13 @@ void addLine(int num, int core, int len){
             flag++;
         }
     }
-
+    //안함
+    if(flag == 0) {
+        for (int a = 0; a < N; a++) {
+            for (int b = 0; b < N; b++) {
+                board[a][b] = board_fixed[a][b];
+            }
+        }
+        addLine(num + 1, core, len);
+    }
 }
