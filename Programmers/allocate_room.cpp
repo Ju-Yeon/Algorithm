@@ -3,12 +3,12 @@
 #include <iostream>
 
 using namespace std;
-map <long long, long long> m;
+map <long , long> m;
 
 long long find(long long key){
 
     if(!m[key]) return key;
-    return find(m[key]+1);
+    return m[key] = find(m[key]); //압축하는 과
 
 }
 
@@ -17,19 +17,17 @@ vector<long long> solution(long long k, vector<long long> room_number) {
 
     for(int i = 0; i < room_number.size(); i++){
 
-        long long n = find(room_number[i]);
-        
-        //다음 인덱스 고려
-        if(!m[n+1]) m[n] = n;
-        else m[n] = n + 1;;
-
-        //이전 인덱스 고려
-        if(m[n-1]) m[n-1] = n;
-
-        answer.push_back(n);
-
+        long long cur = room_number[i];
+        if(!m[cur]){
+            answer.push_back(cur);
+            m[cur] = find(cur + 1);
+        }else{
+            long long temp = find(cur);
+            answer.push_back(temp);
+            m[temp] = find(temp + 1);
+        }
     }
-    for(int i =0 ; i < answer.size(); i++)
+    for(int i = 0; i < answer.size(); i++)
         cout<<answer[i]<<endl;
     return answer;
 }
