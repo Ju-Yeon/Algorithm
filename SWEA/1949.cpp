@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int N, k, totalLen, minNum, maxNum;
+int N, k, totalLen, maxNum;
 int map[8][8];
 int map_fixed[8][8];
 int dx[] = {0, +1, 0, -1};
@@ -17,15 +17,13 @@ int main(int argc, char** argv)
     int T;
 
     cin>>T;
-
     for(test_case = 1; test_case <= T; ++test_case)
     {
         cin>>N>>k;
         maxNum = 0;
-        minNum = 21;
         totalLen = 0;
-        memset(map, 0, 12);
-        memset(map_fixed, 0, 12);
+        memset(map, 0, 8);
+        memset(map_fixed, 0, 8);
 
         for(int i = 0; i < N; i++){
             for(int l = 0; l < N; l++){
@@ -38,53 +36,41 @@ int main(int argc, char** argv)
                 } else if (maxNum == map[i][l]){
                     highest.emplace_back(make_pair(i,l));
                 }
-
-                if(minNum > map[i][l])
-                    minNum = map[i][l];
             }
         }
 
         for(int i = 0; i < highest.size(); i++) {
             dfs(highest[i].first, highest[i].second, k, 1);
-           cout<<totalLen<<endl;
+            //cout<<totalLen<<endl;
         }
-
         cout<<"#"<<test_case<<" "<<totalLen<<endl;
     }
     return 0;
 }
 
 void dfs(int y, int x, int k, int len) {
-    if(map[y][x] == minNum) {
-        if (totalLen < len) totalLen = len;
-        return;
-    }
 
-    int flag = 0,  minNum_fixed;
+    int flag = 0;
     for (int i = 0; i < 4; i++) {
         int nx = x + dx[i];
         int ny = y + dy[i];
+        if(nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
 
-        for (int t = 0; t <= k; t++) {
-            if (t != 0) {
-                map[ny][nx] = map_fixed[ny][nx] - t;
-                if (map[ny][nx] < 0) map[ny][nx] = 0;
-                if (minNum > map[ny][nx]) {
-                    minNum_fixed = minNum;
-                    minNum = map[ny][nx];
-                }
-                if (map[y][x] > map[ny][nx]) {
-                    dfs(ny, nx, 0, len + 1);
-                    flag++;
-                }
-                map[ny][nx] = map_fixed[ny][nx];
-                minNum = minNum_fixed;
-            }
+        if (map[y][x] > map[ny][nx]) {
+            dfs(ny, nx, k, len + 1);
+            flag++;
+        }
+
+        for (int t = 1; t <= k; t++) {
+            if (map_fixed[ny][nx]-t < 0) continue;
+            map[ny][nx] = map_fixed[ny][nx] - t;
 
             if (map[y][x] > map[ny][nx]) {
-                dfs(ny, nx, k, len + 1);
+                //cout<<ny<<nx<<map[ny][nx]<<len<<endl;
+                dfs(ny, nx, 0, len + 1);
                 flag++;
             }
+            map[ny][nx] = map_fixed[ny][nx];
         }
     }
 
