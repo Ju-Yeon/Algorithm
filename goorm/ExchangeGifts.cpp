@@ -1,29 +1,25 @@
 //자료형 시간초과
 //https://devth-preview.goorm.io/exam/53763/주-구르미-신입-개발자-공개채용-코딩테스트/quiz/3
 
-#include <iostream>
+#include <stdio.h>
 
-using namespace std;
 int main() {
-	ios_base::sync_with_stdio(false);	
-	cin.tie(NULL);
-    cout.tie(NULL);
-	
     int T;
-    unsigned long long M, N, k;
-    cin>>T;
+	long long M, N, k1, k2, k;
+    scanf("%d", &T);
 
     for(int i = 0; i < T; i++){
-		cin>>N>>M;
-
-    k = N/5;
-    while(k != 0){
-        if(M+N >= 12*k)break;
-        else k--;
-    }
-
-    cout<<k<<endl;
+        scanf("%lld %lld", &N, &M);
+		
+        k1 = N/5;
+		k2 = (N+M)/12;
+		k = k1 < k2 ? k1: k2;
+		
+        while(N+M < 12*k){
+			if(k == 0) break;
+			k--;
+        }
+        printf("%lld\n",k);
 	}
-
 	return 0;
 }
